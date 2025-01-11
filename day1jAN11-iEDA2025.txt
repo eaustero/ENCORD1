@@ -192,18 +192,18 @@ ipv4 0.0.0.0 0.0.0.0
 exit
 
 configure terminal
-! dial-peer voice 11 Voip
-! destination-pattern 11..
-! session target ipv4:10.11.100.8
-! codec g711ULAW
+dial-peer voice 11 Voip
+ destination-pattern 11..
+ session target ipv4:10.11.100.8
+ codec g711ULAW
 dial-peer voice 12 Voip
- destination-pattern 12..
+ !destination-pattern 12..
  session target ipv4:10.12.100.8
  codec g711ULAW
-dial-peer voice 21 Voip
- destination-pattern 21..
- session target ipv4:10.21.100.8
- codec g711ULAW
+! dial-peer voice 21 Voip
+ ! destination-pattern 21..
+ ! session target ipv4:10.21.100.8
+ ! codec g711ULAW
 dial-peer voice 22 Voip
  destination-pattern 22..
  session target ipv4:10.22.100.8
@@ -404,13 +404,13 @@ SIP CONFIGURATION
 conf t
  voice service voip
   allow-connections h323 to sip
-          
+!        
   allow-connections sip to h323
   allow-connections sip to sip
   supplementary-service h450.12
  sip
-   bind control source-interface _____0/0
-   bind media source-interface _____0/0
+   bind control source-interface fa0/0
+   bind media source-interface fa0/0
    registrar server expires max 600 min 60
 !
  voice register global
