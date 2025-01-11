@@ -415,32 +415,32 @@ conf t
 !
  voice register global
   mode cme
-  source-address 192.168._.1 port 5060
+  source-address 10.21.100.8 port 5060
   max-dn 12
   max-pool 12
   authenticate register
   create profile sync
  voice register dn 1
-   number ____
+   number 2181
    allow watch
-   name _______
+   name 2181
  voice register dn 2
-   number ___
+   number 2182
    allow watch
-   name _______
+   name 2182
           
   voice register pool 1
-    id mac ____.____.____
+    id mac 980d.af1e.ca4d
     number 1 dn 1
     dtmf-relay sip-notify
-    username ____ password ____
+    username 2181 password 2181
     codec g711ulaw
 !
-  voice register pool 1
-    id mac ____.____.____
+  voice register pool 2
+    id mac a4c6.9a3f.5a41
     number 1 dn 2
     dtmf-relay sip-notify
-    username ____ password ____
+    username 2182 password 2182
     codec g711ulaw
 !
 *******call other countries!!!********
@@ -456,3 +456,20 @@ exit
 sip-ua
 sip-server ipv4:192.168.k.1
 
+##### Giving 60% Bandwith to voice, 40% to Everything else ######
+HOW TO CONFIGURE QUALITY OF SERVICE  (QOS)
+CUCM: "cm-pm-sp" Class Map / Policy Map / Service Policy
+config t
+ class-map match-any VOICE
+  match protocol sip
+  match protocol rtp
+! match protocol sccp
+ Policy-map QOS-POLICY
+  class VOICE
+   bandwidth percent 60
+class class-default
+   bandwidth percent 40
+Interface fa0/0
+  service-policy output QOS-POLICY
+end
+show policy-map QOS-POLICY
